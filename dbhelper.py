@@ -19,10 +19,10 @@ class DBHelper():
         connection=self.connect()
         try:
             # The following introduces a deliberate security flaw.,see following codes
-            query="INSERT INTO crimes (description) VALUES ('{}');".format(data)
+            query="INSERT INTO crimes (description) VALUES (%s);"%(data)
             with connection.cursor() as cursor:
                 cursor.execute(query)
-                cursor.commit()
+                connection.commit()
         finally:
             connection.close()
     def clear_all(self):
@@ -31,6 +31,6 @@ class DBHelper():
             query="DELETE FROM crimes;"
             with connection.cursor() as cursor:
                 cursor.execute(query)
-                cursor.commit()
+                connection.commit()
         finally:
             connection.close()
