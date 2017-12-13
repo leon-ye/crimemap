@@ -1,4 +1,8 @@
-from dbhelper import DBHelper
+import dbconfig
+if dbconfig.test:
+    from mockdbhelper import MockDBHelper as DBHelper
+else:
+    from dbhelper import DBHelper
 from flask import Flask
 from flask import request
 from flask import render_template
@@ -7,7 +11,7 @@ DB=DBHelper()
 @app.route("/")
 def home():
     try:
-        data=DB.get_all_data()
+        data=DB.get_all_inputs()
     except Exception as e:
         print(e)
         data=None
